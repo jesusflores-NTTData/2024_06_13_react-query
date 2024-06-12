@@ -1,0 +1,23 @@
+
+.tasksTable {
+  border-collapse: collapse;
+ }
+ .tasksTable td, .tasksTable th  {
+  border: 1px solid gainsboro;
+  padding: 0.5rem 1rem;
+ }
+ .tasksTable th {
+  font-weight: bold;
+ }
+.tasksTable td:nth-child(2) span {
+  display: none;
+ }
+.tasksTable td[data-task-status="DONE"]:after {
+  content: '\2714';
+ }
+.tasksTable td[data-task-status="TO-DO"]:after {
+  content: '\274f';
+ }
+.tasksTable td {
+  text-align: center;
+ }

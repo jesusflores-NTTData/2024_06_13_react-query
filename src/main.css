@@ -1,0 +1,13 @@
+:root {
+  --main-color: white;
+  --bg-color: rgb(38, 38, 38);
+}
+
+
+body {
+  background-color: var(--bg-color);
+  color: var(--main-color);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
