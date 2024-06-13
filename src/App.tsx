@@ -1,17 +1,14 @@
-import { useEffect, useState } from 'react';
-import styles from './App.module.css'
-import { fetchTaks, postNewTask, sendUpdateTaskStatus } from './infraestructure/TaksRepository';
-import { TasksTable } from './components/tasks-table/TasksTable';
+import styles from './App.module.css';
 import { NewTask } from './components/new-task/NewTask';
-import { Task } from './domain/model/Task';
 import { Summary } from './components/summary/Summary';
+import { TasksTable } from './components/tasks-table/TasksTable';
+import { Task } from './domain/model/Task';
+import { postNewTask, sendUpdateTaskStatus } from './infraestructure/TaksRepository';
+import { useTastksList } from './useTasksList';
 
 function App() {
   // TO-DO: Mover el useState y el useEffect a un custom hook llamado useTasksList
-  const [tasks, setTasks] = useState<Task[]>();
-  useEffect(() => {
-    fetchTaks().then((data) => setTasks(data));
-  }, []);
+  const { data: tasks } = useTastksList();
 
   const handleNewTask = (task: Task) => {
     postNewTask(task);
