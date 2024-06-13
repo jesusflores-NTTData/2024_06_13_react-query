@@ -1,7 +1,7 @@
 import { Task } from "../domain/model/Task";
 const BASE_URL = 'https://www.react-query-mocks.com';
 
-export async function fetchTaks(): Promise<Task[]> {
+export async function fetchTasks(): Promise<Task[]> {
   const result = await fetch(`${BASE_URL}/api/tasks`);
   if (result.status === 200) {
     return (await result.json() as Task[])

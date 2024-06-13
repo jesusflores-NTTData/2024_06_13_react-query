@@ -7,8 +7,7 @@ import { postNewTask, sendUpdateTaskStatus } from './infraestructure/TaksReposit
 import { useTastksList } from './useTasksList';
 
 function App() {
-  // TO-DO: Mover el useState y el useEffect a un custom hook llamado useTasksList
-  const { data: tasks } = useTastksList();
+  const { data: tasks, isFetching, isError } = useTastksList();
 
   const handleNewTask = (task: Task) => {
     postNewTask(task);
@@ -18,16 +17,19 @@ function App() {
     sendUpdateTaskStatus(updatedTask);
   }
 
-  if (!tasks) {
+  if (isFetching) {
     return <h1 className={styles.title}>Loading...</h1>;
+  }
+  if (isError) {
+    return <h1 className={styles.title}>¡Error!</h1>;
   }
   // Problema: tenemos que hacer properties drilling para propagar los datos (tasks).
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Tasks List</h1>
-      <TasksTable tasks={tasks} toggleTask={handleToggleTask} />
+      <TasksTable tasks={tasks!} toggleTask={handleToggleTask} />
       <NewTask newTaskEvent={handleNewTask} />
-      <Summary list={tasks} />
+      <Summary list={tasks!} />
     </div>);
 }
 
