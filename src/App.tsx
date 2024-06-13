@@ -9,8 +9,7 @@ import { useTastksList } from './useTasksList';
 import { Cuadrados } from './components/cuadrados/Cuadrados';
 
 function App() {
-  const [activo, setActivo] = useState(false);
-  const { data: tasks, isFetching, isError } = useTastksList(activo);
+  const { data: tasks, isFetching, isError } = useTastksList();
 
   const handleNewTask = (task: Task) => {
     postNewTask(task);
@@ -35,7 +34,7 @@ function App() {
       <Summary list={tasks} />
       <Cuadrados />
     </div > :
-    <button onClick={() => setActivo(true)}>Empezar </button>;
+    null;
 }
 
 export default App
