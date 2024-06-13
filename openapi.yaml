@@ -1,0 +1,112 @@
+openapi: 3.0.3
+info:
+  title: My Project OpenAPI Definition
+  version: '1.0'
+  description: My ProjectRest API Definition
+  license:
+    name: Unlicensed
+    url: https://www.example.com
+servers:
+  - url: https://localhost
+    description: Development QA Server
+  - url: https://localhost
+    description: Release Server
+  - url: https://localhost
+    description: Pro Server
+tags:
+  - name: Iberia Plus
+    description: REST API Operations of Project(Project)
+paths:
+  /v1/todo:
+    get:
+      summary: list of to-dos
+      operationId: getTodos
+      description: Retrieve all of todos
+      responses:
+        '200':
+          description: Response of getTodos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/todo'
+
+        '401':
+          $ref: '#/components/responses/unauthorized-error'
+        '408':
+          $ref: '#/components/responses/timeout-error'
+        '500':
+          $ref: '#/components/responses/unexpected-error'
+
+components:
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    todo:
+      type: object
+      required:
+        - id
+        - text
+        - status
+      properties:
+        id:
+          type: number
+          example: id of the todo task
+        text:
+          type: string
+          example: description of the todo task
+        status:
+          type: string
+          enum:
+          - TO-DO
+          - DONE
+          example: status of the todo task
+    general-error:
+      type: object
+      title: GeneralError
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 400
+        message:
+          type: string
+          example: An unexpected error has ocurred
+  responses:
+    unauthorized-error:
+      description: Unauthorized error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/general-error'
+    timeout-error:
+      description: Time Out Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/general-error'
+    unexpected-error:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/general-error'
+    bad-request-error:
+      description: Bad request Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/general-error'
+    not-found-error:
+      description: Not Found Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/general-error'

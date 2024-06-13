@@ -15,7 +15,7 @@ module.exports = {
     'eslint:recommended',
     'prettier'
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite-env.d.ts', 'postcss.config.js', 'public/mockServiceWorker.js', 'coverage'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite-env.d.ts', 'postcss.config.js', 'public/mockServiceWorker.js', 'coverage', 'src/openapi/**/*'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -36,7 +36,7 @@ module.exports = {
   overrides: [
     {
       files: ['src/**/*.ts', 'src/**/*.tsx'],
-      excludedFiles: ['**/*.test.tsx', '**/*.test.ts'],
+      excludedFiles: ['**/*.test.tsx', '**/*.test.ts', 'src/openapi/**/*'],
       env: {
         browser: true,
         es2022: true,

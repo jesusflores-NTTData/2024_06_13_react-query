@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "generate": "openapi-generator-cli generate",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "vite"
@@ -18,6 +19,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.13.4",
     "@tanstack/eslint-plugin-query": "^5.43.1",
     "@tanstack/react-query": "^5.45.0",
     "@testing-library/jest-dom": "6.4.5",
