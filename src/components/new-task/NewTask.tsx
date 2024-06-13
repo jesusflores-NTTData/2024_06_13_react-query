@@ -1,22 +1,27 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
-import { Task } from "../../domain/model/Task";
+import { postNewTask } from "../../infraestructure/TaksRepository";
 import styles from "./NewTask.module.css";
 
 
 export interface NewTaskPros {
-  newTaskEvent: (task: Task) => void;
 }
 
-export function NewTask({ newTaskEvent }: NewTaskPros) {
-
+export function NewTask() {
   const textRef = useRef<HTMLInputElement>(null);
+  const queryClient = useQueryClient();
+  const handleSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ['tasksList'] })
+  }
+  const { mutate } = useMutation({ mutationFn: postNewTask, onSuccess: handleSuccess });
   const handleSendButton = () => {
-    newTaskEvent({
+    mutate({
       id: 0,
       text: textRef.current?.value ?? '',
       status: 'TO-DO'
     });
   }
+
   return <form>
     <div className={styles.formContainer}>
       <div><h2>New Task</h2></div>

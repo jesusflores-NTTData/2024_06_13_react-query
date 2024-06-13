@@ -1,40 +1,35 @@
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './App.module.css';
+import { Cuadrados } from './components/cuadrados/Cuadrados';
 import { NewTask } from './components/new-task/NewTask';
 import { Summary } from './components/summary/Summary';
 import { TasksTable } from './components/tasks-table/TasksTable';
 import { Task } from './domain/model/Task';
-import { postNewTask, sendUpdateTaskStatus } from './infraestructure/TaksRepository';
+import { sendUpdateTaskStatus } from './infraestructure/TaksRepository';
 import { useTastksList } from './useTasksList';
-import { Cuadrados } from './components/cuadrados/Cuadrados';
 
 function App() {
-  const { data: tasks, isFetching, isError } = useTastksList();
 
-  const handleNewTask = (task: Task) => {
-    postNewTask(task);
+  const { data: tasks } = useTastksList();
+  const queryClient = useQueryClient();
+  const handleSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ['tasksList'] })
   }
+  const { mutate } = useMutation({ mutationFn: sendUpdateTaskStatus, onSuccess: handleSuccess });
   const handleToggleTask = (task: Task) => {
     const updatedTask: Task = { ...task, status: task.status === 'DONE' ? 'TO-DO' : 'DONE' }
-    sendUpdateTaskStatus(updatedTask);
+    mutate(updatedTask);
   }
-
-  if (isFetching) {
-    return <h1 className={styles.title}>Loading...</h1>;
+  if (!tasks) {
+    return <h1>Loading....</h1>;
   }
-  if (isError) {
-    return <h1 className={styles.title}>¡Error!</h1>;
-  }
-  // Problema: tenemos que hacer properties drilling para propagar los datos (tasks).
-  return tasks ?
-    <div className={styles.container}>
+  return <div className={styles.container}>
       <h1 className={styles.title}>Tasks List</h1>
-      <TasksTable tasks={tasks} toggleTask={handleToggleTask} />
-      <NewTask newTaskEvent={handleNewTask} />
-      <Summary list={tasks} />
+    <TasksTable toggleTask={handleToggleTask} />
+    <NewTask />
+    <Summary />
       <Cuadrados />
-    </div > :
-    null;
+  </div >;
 }
 
 export default App

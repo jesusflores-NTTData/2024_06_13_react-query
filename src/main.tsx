@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import 'modern-normalize/modern-normalize.css'
@@ -16,6 +17,7 @@ enableMocking().then(() => {
     // <React.StrictMode> // Eliminado para evitar doble montado del componente en desarrollo para explicar mejor las peticiones antes de react query.
     <QueryClientProvider client={queryClient}>
       <App />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
     // </React.StrictMode>,
   );
