@@ -16,6 +16,7 @@ export function TasksTable({ tasks, toggleTask }: TasksTableProps) {
         <th>STATUS</th>
         <th>TEXT</th>
         <th>ACTION</th>
+        <th>HORA</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@ export function TasksTable({ tasks, toggleTask }: TasksTableProps) {
           <td data-task-status={task.status}><span>{task.status}</span></td>
           <td>{task.text}</td>
           <td><button type="button" onClick={() => toggleTask(task)}>Toggle to {task.status == 'DONE' ? 'To-do' : 'done'}</button></td>
+          <td>{task.hora ? task.hora.toLocaleDateString() : ''}</td>
         </tr>
       })}
     </tbody>
