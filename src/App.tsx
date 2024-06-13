@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './App.module.css';
 import { NewTask } from './components/new-task/NewTask';
 import { Summary } from './components/summary/Summary';
@@ -7,7 +8,8 @@ import { postNewTask, sendUpdateTaskStatus } from './infraestructure/TaksReposit
 import { useTastksList } from './useTasksList';
 
 function App() {
-  const { data: tasks, isFetching, isError } = useTastksList();
+  const [activo, setActivo] = useState(false);
+  const { data: tasks, isFetching, isError } = useTastksList(activo);
 
   const handleNewTask = (task: Task) => {
     postNewTask(task);
@@ -24,13 +26,14 @@ function App() {
     return <h1 className={styles.title}>¡Error!</h1>;
   }
   // Problema: tenemos que hacer properties drilling para propagar los datos (tasks).
-  return (
+  return tasks ?
     <div className={styles.container}>
       <h1 className={styles.title}>Tasks List</h1>
-      <TasksTable tasks={tasks!} toggleTask={handleToggleTask} />
+      <TasksTable tasks={tasks} toggleTask={handleToggleTask} />
       <NewTask newTaskEvent={handleNewTask} />
-      <Summary list={tasks!} />
-    </div>);
+      <Summary list={tasks} />
+    </div > :
+    <button onClick={() => setActivo(true)}>Empezar </button>;
 }
 
 export default App
