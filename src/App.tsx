@@ -6,6 +6,7 @@ import { TasksTable } from './components/tasks-table/TasksTable';
 import { Task } from './domain/model/Task';
 import { postNewTask, sendUpdateTaskStatus } from './infraestructure/TaksRepository';
 import { useTastksList } from './useTasksList';
+import { Cuadrados } from './components/cuadrados/Cuadrados';
 
 function App() {
   const [activo, setActivo] = useState(false);
@@ -32,6 +33,7 @@ function App() {
       <TasksTable tasks={tasks} toggleTask={handleToggleTask} />
       <NewTask newTaskEvent={handleNewTask} />
       <Summary list={tasks} />
+      <Cuadrados />
     </div > :
     <button onClick={() => setActivo(true)}>Empezar </button>;
 }

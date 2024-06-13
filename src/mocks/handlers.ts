@@ -50,6 +50,12 @@ export const handlers = [
     }
     return getError(404, 'Not found');
   }),
+  http.post('*/api/cuadrado', async ({ request }) => {
+    const item = (await request.json()) as { num: number };
+    console.log('item', item);
+    await delay(1500);
+    return HttpResponse.json({ cuadrado: item.num * item.num })
+  }),
 ];
 
 function addTaskToList(task: Task): Task {
