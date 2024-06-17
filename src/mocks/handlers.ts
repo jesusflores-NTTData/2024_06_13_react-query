@@ -1,11 +1,5 @@
 import { delay, http, HttpResponse } from "msw";
-
-interface ShoppingItem {
-  id: number;
-  name: string;
-  quantity: number;
-  purchased: boolean;
-}
+import { ShoppingItem } from "../domain/model/ShoppingItem";
 
 const shoppingList: ShoppingItem[] = [
   {
