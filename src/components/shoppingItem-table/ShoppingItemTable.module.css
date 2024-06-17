@@ -1,0 +1,23 @@
+.ShoppingItemTable {
+  border-collapse: collapse;
+}
+.ShoppingItemTable td,
+.ShoppingItemTable th {
+  border: 1px solid gainsboro;
+  padding: 0.5rem 1rem;
+}
+.ShoppingItemTable th {
+  font-weight: bold;
+}
+.ShoppingItemTable td:nth-child(2) span {
+  display: none;
+}
+.ShoppingItemTable td[data-task-status="DONE"]:after {
+  content: "\2714";
+}
+.ShoppingItemTable td[data-task-status="TO-DO"]:after {
+  content: "\274f";
+}
+.ShoppingItemTable td {
+  text-align: center;
+}
