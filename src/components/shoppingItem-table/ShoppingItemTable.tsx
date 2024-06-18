@@ -5,7 +5,6 @@ import styles from "./ShoppingItemTable.module.css";
 import { useEffect, useState } from "react";
 
 export function ShoppingItemTable({}: any) {
-  const [isEnabled, setIsEnabled] = useState(false);
   const [queryStatusText, setQueryStatusText] = useState(
     "No data available..."
   );
@@ -18,7 +17,6 @@ export function ShoppingItemTable({}: any) {
   } = useQuery({
     queryKey: ["shoppingItemsList"],
     queryFn: fetchShoppingItems,
-    enabled: isEnabled,
   });
 
   useEffect(() => {
@@ -45,7 +43,9 @@ export function ShoppingItemTable({}: any) {
                 <tr key={shoppingItem.id}>
                   <td>{shoppingItem.id}</td>
                   <td data-shoppingItem-purchased={shoppingItem.purchased}>
-                    <span>{shoppingItem.purchased}</span>
+                    <span>
+                      {shoppingItem.purchased ? "Purchased" : "To be purchased"}
+                    </span>
                   </td>
                   <td>{shoppingItem.name}</td>
                   <td>
@@ -73,7 +73,6 @@ export function ShoppingItemTable({}: any) {
           )}
         </tbody>
       </table>
-      <button onClick={() => setIsEnabled(true)}>Launch Query</button>
     </>
   );
 }
