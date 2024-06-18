@@ -1,33 +1,26 @@
-import { ShoppingItem } from "../../domain/model/ShoppingItem";
+import { useQuery } from "@tanstack/react-query";
+import { fetchShoppingItems } from "../../infraestructure/ShoppingRepository";
+
 import styles from "./ShoppingItemTable.module.css";
 
 export function ShoppingItemTable({}: any) {
-  const shoppingItems: ShoppingItem[] = [
-    {
-      id: 1,
-      purchased: false,
-      name: "Milk",
-      quantity: 1,
-    },
-    {
-      id: 2,
-      purchased: false,
-      name: "Eggs",
-      quantity: 1,
-    },
-    {
-      id: 3,
-      purchased: false,
-      name: "Bread",
-      quantity: 1,
-    },
-    {
-      id: 4,
-      purchased: false,
-      name: "Butter",
-      quantity: 1,
-    },
-  ];
+  // Success Response (200 OK)
+  const {
+    isLoading,
+    isError,
+    data: shoppingItems,
+  } = useQuery({
+    queryKey: ["shoppingItemsList"],
+    queryFn: fetchShoppingItems,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error</div>;
+  }
 
   return (
     <table className={styles.ShoppingItemTable}>
@@ -41,32 +34,33 @@ export function ShoppingItemTable({}: any) {
         </tr>
       </thead>
       <tbody>
-        {shoppingItems.map((shoppingItem) => {
-          return (
-            <tr key={shoppingItem.id}>
-              <td>{shoppingItem.id}</td>
-              <td data-shoppingItem-purchased={shoppingItem.purchased}>
-                <span>{shoppingItem.purchased}</span>
-              </td>
-              <td>{shoppingItem.name}</td>
-              <td>
-                <button
-                  type="button"
-                  onClick={() =>
-                    console.log(
-                      "Toggle to",
-                      (shoppingItem.purchased = !shoppingItem.purchased)
-                    )
-                  }
-                >
-                  Toggle to{" "}
-                  {shoppingItem.purchased ? "Unpurchased" : "Purchased"}
-                </button>
-              </td>
-              <td>{shoppingItem.quantity}</td>
-            </tr>
-          );
-        })}
+        {shoppingItems &&
+          shoppingItems.map((shoppingItem) => {
+            return (
+              <tr key={shoppingItem.id}>
+                <td>{shoppingItem.id}</td>
+                <td data-shoppingItem-purchased={shoppingItem.purchased}>
+                  <span>{shoppingItem.purchased}</span>
+                </td>
+                <td>{shoppingItem.name}</td>
+                <td>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      console.log(
+                        "Toggle to",
+                        (shoppingItem.purchased = !shoppingItem.purchased)
+                      )
+                    }
+                  >
+                    Toggle to{" "}
+                    {shoppingItem.purchased ? "Unpurchased" : "Purchased"}
+                  </button>
+                </td>
+                <td>{shoppingItem.quantity}</td>
+              </tr>
+            );
+          })}
       </tbody>
     </table>
   );

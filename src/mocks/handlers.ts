@@ -25,7 +25,7 @@ const shoppingList: ShoppingItem[] = [
 let failCount = 0;
 
 export const handlers = [
-  http.get("*/api/shopping-list", async () => {
+  http.get("*/api/ShoppingItems", async () => {
     failCount--;
     await delay(1500);
     if (failCount + 1 <= 0) {
@@ -33,14 +33,14 @@ export const handlers = [
     }
     return getError();
   }),
-  http.post("*/api/shopping-list", async ({ request }) => {
+  http.post("*/api/ShoppingItems", async ({ request }) => {
     const item = (await request.json()) as ShoppingItem;
     addItemToList(item);
     console.log(shoppingList);
     await delay(1500);
     return new Response(null, { status: 200 });
   }),
-  http.patch("*/api/shopping-list", async ({ request }) => {
+  http.patch("*/api/ShoppingItems", async ({ request }) => {
     const itemData = (await request.json()) as {
       id: number;
       purchased: boolean;
@@ -53,12 +53,6 @@ export const handlers = [
       return new Response(null, { status: 200 });
     }
     return getError(404, "Not found");
-  }),
-  http.post("*/api/cuadrado", async ({ request }) => {
-    const item = (await request.json()) as { num: number };
-    console.log("item", item);
-    await delay(1500);
-    return HttpResponse.json({ cuadrado: item.num * item.num });
   }),
 ];
 
