@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
@@ -16,30 +17,13 @@ async function enableMocking() {
   return worker.start();
 }
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // Retry failed requests 3 times before showing an error
-      retry: 3,
-      // Refetch data every 1 minute while the component is focused
-      refetchOnWindowFocus: true,
-      // Refetch data if the component mounts and data is stale
-      refetchOnMount: true,
-      // Refetch data if the component reconnects and data is stale
-      refetchOnReconnect: true,
-      // Set the default stale time to 1 minute
-      staleTime: 1000 * 60 * 1,
-    },
-    mutations: {
-      // Retry failed mutations 3 times before showing an error
-      retry: 3,
-    },
-  },
-});
+const queryClient = new QueryClient();
+
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <App />
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 });

@@ -1,23 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchShoppingItems } from "../../infraestructure/ShoppingRepository";
-
 import styles from "./ShoppingItemTable.module.css";
 import { useEffect, useState } from "react";
+import { useFetchShoppingItems } from "../../hooks/useFetchShoppingItems";
 
 export function ShoppingItemTable({}: any) {
   const [queryStatusText, setQueryStatusText] = useState(
     "No data available..."
   );
 
-  // Success Response (200 OK)
   const {
     isLoading,
     isError,
     data: shoppingItems,
-  } = useQuery({
-    queryKey: ["shoppingItemsList"],
-    queryFn: fetchShoppingItems,
-  });
+  } = useFetchShoppingItems({ useStale: true, minutesUntilStale: 1 });
 
   useEffect(() => {
     if (isLoading) setQueryStatusText("Loading data...");
