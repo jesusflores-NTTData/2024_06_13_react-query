@@ -28,6 +28,7 @@ export function ShoppingItemTable({}: any) {
             <th>Name</th>
             <th>Action</th>
             <th>Quantity</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
@@ -57,6 +58,7 @@ export function ShoppingItemTable({}: any) {
                     </button>
                   </td>
                   <td>{shoppingItem.quantity}</td>
+                  <td>{shoppingItem.price}</td>
                 </tr>
               );
             })

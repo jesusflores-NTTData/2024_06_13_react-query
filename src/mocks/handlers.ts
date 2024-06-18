@@ -7,18 +7,21 @@ const shoppingList: ShoppingItem[] = [
     name: "Apples",
     quantity: 3,
     purchased: false,
+    price: 1.556,
   },
   {
     id: 2,
     name: "Milk",
     quantity: 1,
     purchased: false,
+    price: 2.567,
   },
   {
     id: 3,
     name: "Bread",
     quantity: 2,
     purchased: true,
+    price: 1.278,
   },
 ];
 
