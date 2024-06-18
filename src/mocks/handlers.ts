@@ -22,7 +22,7 @@ const shoppingList: ShoppingItem[] = [
   },
 ];
 
-let failCount = 5;
+let failCount = 0;
 
 export const handlers = [
   http.get("*/api/ShoppingItems", async () => {
