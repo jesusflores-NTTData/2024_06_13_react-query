@@ -12,6 +12,7 @@ export function ShoppingItemTable({}: any) {
   } = useQuery({
     queryKey: ["shoppingItemsList"],
     queryFn: fetchShoppingItems,
+    retry: 2,
   });
 
   if (isLoading) {
