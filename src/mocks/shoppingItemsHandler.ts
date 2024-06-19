@@ -27,7 +27,7 @@ const shoppingList: ShoppingItem[] = [
 
 let failCount = 0;
 
-export const handlers = [
+export const shoppingItemsHandler = [
   http.get("*/api/ShoppingItems", async () => {
     failCount--;
     await delay(1500);
