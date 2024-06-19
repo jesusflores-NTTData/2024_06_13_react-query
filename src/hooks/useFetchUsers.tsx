@@ -10,6 +10,12 @@ export const useFetchUsers = (): any => {
       queryFn: () => fetchUserById(id),
       staleTime: Infinity,
     })),
+    combine: (results) => {
+      return {
+        data: results.map((result) => result.data),
+        pending: results.some((result) => result.isPending),
+      };
+    },
   });
 
   return results;

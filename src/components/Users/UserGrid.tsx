@@ -1,18 +1,21 @@
 import React from "react";
 import UserCard from "./UserCard";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
+import { User } from "../../domain/model/User";
 
 const UserGrid: React.FC = () => {
-  const results = useFetchUsers();
+  const { data, pending } = useFetchUsers();
+
+  if (pending) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div style={styles.grid}>
-      {results &&
-        results.length > 0 &&
-        results.map((element: any) => {
-          if (element.isSuccess) {
-            return <UserCard key={element.data.id} user={element.data} />;
-          }
+      {data &&
+        data.length > 0 &&
+        data.map((user: User) => {
+          return <UserCard key={user.id} user={user} />;
         })}
     </div>
   );
