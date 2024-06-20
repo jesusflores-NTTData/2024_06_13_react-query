@@ -1,8 +1,8 @@
 import React from "react";
-import { useFetchPaginatedMovies } from "../../hooks/useFetchPaginatedMovies";
+import { useFetchInfiniteMovies } from "../../hooks/useFetchInfiniteMovies";
 import MovieCard from "./MovieCard";
 
-export const MoviesTable = () => {
+export const MoviesList = () => {
   const {
     data,
     error,
@@ -11,7 +11,7 @@ export const MoviesTable = () => {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-  } = useFetchPaginatedMovies();
+  } = useFetchInfiniteMovies();
 
   console.log(
     data,

@@ -1,9 +1,8 @@
 import "./App.css";
-import MoviesGrid from "./components/Movies/MoviesGrid";
-import { MoviesTable } from "./components/Movies/MoviesTable";
+import { MoviesList } from "./components/Movies/MoviesList";
 
 function App() {
-  return <MoviesTable />;
+  return <MoviesList />;
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchPaginatedMovies } from "../infraestructure/MoviesRepository";
 
-export const useFetchPaginatedMovies = (): any => {
+export const useFetchInfiniteMovies = (): any => {
   const {
     data,
     error,
