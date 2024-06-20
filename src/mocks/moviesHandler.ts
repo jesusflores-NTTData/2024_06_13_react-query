@@ -79,22 +79,36 @@ export const moviesHandler = [
     }
     return getError();
   }),
-  http.get(`*/api/Movies/:cursor`, async (req) => {
-    const { cursor } = req.params;
+  http.get(`*/api/Movies/:page`, async (req) => {
+    const { page } = req.params;
 
-    const start = parseInt(cursor as string);
-    const end = start + 2;
+    const currentPage = parseInt(page as string);
+    const itemsPerPage = 2;
 
-    const nextCursor = end < movies.length ? end : null;
+    const isLastItem =
+      currentPage + itemsPerPage + 1 === movies.length ? true : false;
 
-    const result = movies.slice(start, end);
+    let start = currentPage;
+    start = start === 0 ? start : start + itemsPerPage - 1;
+
+    const end =
+      start + itemsPerPage === movies.length
+        ? movies.length - 1
+        : start + itemsPerPage;
+
+    start = isLastItem ? end : start;
+
+    const result = isLastItem ? movies.slice(start) : movies.slice(start, end);
 
     failCount--;
 
     await delay(1500);
 
     if (failCount + 1 <= 0) {
-      return HttpResponse.json({ data: [...result], nextCursor });
+      return HttpResponse.json({
+        movies: [...result],
+        hasMore: !isLastItem,
+      });
     }
     return getError();
   }),
