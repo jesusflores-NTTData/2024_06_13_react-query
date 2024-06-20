@@ -8,6 +8,7 @@ export const movies: Movie[] = [
     director: "Christopher Nolan",
     releaseYear: 2010,
     genres: ["Action", "Sci-Fi"],
+    cursor: 0,
   },
   {
     id: 2,
@@ -15,6 +16,7 @@ export const movies: Movie[] = [
     director: "Lana Wachowski, Lilly Wachowski",
     releaseYear: 2010,
     genres: ["Action", "Sci-Fi"],
+    cursor: 1,
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const movies: Movie[] = [
     director: "Christopher Nolan",
     releaseYear: 2014,
     genres: ["Adventure", "Drama", "Sci-Fi"],
+    cursor: 2,
   },
   {
     id: 4,
@@ -29,6 +32,7 @@ export const movies: Movie[] = [
     director: "Francis Ford Coppola",
     releaseYear: 1972,
     genres: ["Crime", "Drama"],
+    cursor: 3,
   },
   {
     id: 5,
@@ -36,6 +40,7 @@ export const movies: Movie[] = [
     director: "Quentin Tarantino",
     releaseYear: 1994,
     genres: ["Crime", "Drama"],
+    cursor: 4,
   },
 ];
 
@@ -71,6 +76,25 @@ export const moviesHandler = [
         (movie) => movie.releaseYear === parsedReleaseYear
       );
       return HttpResponse.json(results);
+    }
+    return getError();
+  }),
+  http.get(`*/api/Movies/:cursor`, async (req) => {
+    const { cursor } = req.params;
+
+    const start = parseInt(cursor as string);
+    const end = start + 2;
+
+    const nextCursor = end < movies.length ? end : null;
+
+    const result = movies.slice(start, end);
+
+    failCount--;
+
+    await delay(1500);
+
+    if (failCount + 1 <= 0) {
+      return HttpResponse.json({ data: [...result], nextCursor });
     }
     return getError();
   }),

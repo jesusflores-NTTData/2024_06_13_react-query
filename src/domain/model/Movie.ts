@@ -4,4 +4,5 @@ export interface Movie {
   director: string;
   releaseYear: number;
   genres: string[];
+  cursor?: number;
 }
