@@ -2,12 +2,15 @@ import React from "react";
 import { useFetchPaginatedMovies } from "../../hooks/useFetchPaginatedMovies";
 import MovieCard from "./MovieCard";
 import { Movie } from "../../domain/model/Movie";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const MoviesPages = () => {
   const [page, setPage] = React.useState(0);
 
   const { isPending, isError, error, data, isFetching, isPlaceholderData } =
     useFetchPaginatedMovies({ page });
+
+  const queryClient = useQueryClient();
 
   return (
     <div>
@@ -41,6 +44,13 @@ export const MoviesPages = () => {
         Next Page
       </button>
       {isFetching ? <span> Loading...</span> : null}{" "}
+      <button
+        onClick={() => {
+          queryClient.invalidateQueries();
+        }}
+      >
+        Invalidate Queries
+      </button>
     </div>
   );
 };

@@ -7,6 +7,7 @@ export const useFetchPaginatedMovies = ({ page = 0 }): any => {
       queryKey: ["movies", page],
       queryFn: () => fetchPaginatedMovies({ pageParam: page }),
       placeholderData: keepPreviousData,
+      staleTime: 1000 * 60 * 5,
     });
 
   return { isPending, isError, error, data, isFetching, isPlaceholderData };

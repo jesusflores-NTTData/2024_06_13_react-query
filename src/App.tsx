@@ -1,8 +1,14 @@
 import "./App.css";
-import { MoviesPages } from "./components/Movies/MoviesPages";
+import { NewShoppingItem } from "./components/NewShoppingItem/NewShoppingItem";
+import { ShoppingItemTable } from "./components/ShoppingItemTable/ShoppingItemTable";
 
 function App() {
-  return <MoviesPages />;
+  return (
+    <>
+      <ShoppingItemTable />
+      <NewShoppingItem />
+    </>
+  );
 }
 
 export default App;

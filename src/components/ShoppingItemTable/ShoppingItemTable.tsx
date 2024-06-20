@@ -24,9 +24,7 @@ export function ShoppingItemTable({}: any) {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Purchased</th>
             <th>Name</th>
-            <th>Action</th>
             <th>Quantity</th>
             <th>Price</th>
           </tr>
@@ -37,26 +35,7 @@ export function ShoppingItemTable({}: any) {
               return (
                 <tr key={shoppingItem.id}>
                   <td>{shoppingItem.id}</td>
-                  <td data-shoppingItem-purchased={shoppingItem.purchased}>
-                    <span>
-                      {shoppingItem.purchased ? "Purchased" : "To be purchased"}
-                    </span>
-                  </td>
                   <td>{shoppingItem.name}</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        console.log(
-                          "Toggle to",
-                          (shoppingItem.purchased = !shoppingItem.purchased)
-                        )
-                      }
-                    >
-                      Toggle to{" "}
-                      {shoppingItem.purchased ? "Unpurchased" : "Purchased"}
-                    </button>
-                  </td>
                   <td>{shoppingItem.quantity}</td>
                   <td>{shoppingItem.price}</td>
                 </tr>
@@ -64,7 +43,7 @@ export function ShoppingItemTable({}: any) {
             })
           ) : (
             <tr>
-              <td colSpan={5}>{queryStatusText}</td>
+              <td colSpan={4}>{queryStatusText}</td>
             </tr>
           )}
         </tbody>

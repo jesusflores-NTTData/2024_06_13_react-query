@@ -1,9 +1,32 @@
 import { useRef } from "react";
 import styles from "./NewShoppingItem.module.css";
+import { postNewShoppingItem } from "../../infraestructure/ShoppingRepository";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function NewShoppingItem() {
   const nameRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
+
+  const queryClient = useQueryClient();
+
+  const handleSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ["shoppingItemsList"] });
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: postNewShoppingItem,
+    onSuccess: handleSuccess,
+  });
+
+  const handleNewShoppingItem = () => {
+    mutate({
+      id: 0,
+      name: nameRef?.current?.value || "",
+      quantity: parseInt(quantityRef?.current?.value || "0"),
+      purchased: false,
+      price: 1.456,
+    });
+  };
 
   return (
     <form>
@@ -23,12 +46,7 @@ export function NewShoppingItem() {
           />
         </div>
         <div>
-          <button
-            type="button"
-            onClick={() => {
-              console.log("To implement");
-            }}
-          >
+          <button type="button" onClick={handleNewShoppingItem}>
             Add
           </button>
         </div>
